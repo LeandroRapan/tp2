@@ -1,3 +1,4 @@
+// leandro rapan
 //Array con supuestos datos previos, en este caso el unicornio
 let arrListado=[{img: `imagenes\\MacetaProducto1.jpeg`, nombre: "unicornio", precio:"200"}];
 //funciones para crear objetos, hice dos creadorObjetos y creadorProductos, el cual refiere al primero; quizas sea redundante y con uno era suficiente
