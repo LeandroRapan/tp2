@@ -27,23 +27,18 @@ function creadorProductos (){
       arrListado.push(producto);
       localStorage.clear();
        localStorage.setItem("productoStorange", JSON.stringify(arrListado));
-       escritorHtml();
+       escritorHtml(producto);
   })}  
   
   
    creadorProductos()
 
-   //lo que me esta fallando esta aca, en el escritorhtml. no puedo hacer que tome el local storage, me dice que localstorage no esta definido, o que foreach no es una funcion.
-   //trate muchas cosas pero antes de seguir ensuciando el codigo prefiero tener que rehacer el trabajo, pero me expliquen donde estaba mi error. Gracias.
-  function escritorHtml(){
-    
-    let productosStorange2 = JSON.parse(localStorage.getItem("productoStorange"));
-    
-      if (productosStorange2){arrListado = productosStorange2 } else {productosStorange2 = []}
-    
-     
 
-      productosStorange2.forEach( (producto)=> {
+  function escritorHtml(producto){
+    
+    // let productosStorange2 = JSON.parse(localStorage.getItem("productoStorange"));
+    //   if (productosStorange2){arrListado = productosStorange2 } else {productosStorange2 = []}
+    //   productosStorange2.forEach( (producto)=> {
         let contenedor = document.createElement("div");
         contenedor.innerHTML= `<img src="${producto.img}">
         <h2> ${producto.nombre}</h2>
@@ -53,10 +48,8 @@ function creadorProductos (){
      
         document.body.appendChild(contenedor)
     return arrListado
-    }
-        
-        )
+    // }     
+    //     )
         
     };
-   
-  
+escritorHtml(arrListado[producto])
