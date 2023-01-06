@@ -27,7 +27,7 @@ function creadorProductos (){
       arrListado.push(producto);
       localStorage.clear();
        localStorage.setItem("productoStorange", JSON.stringify(arrListado));
-       escritorHtml(localStorage.parse("productoStorage"));
+       escritorHtml(JSON.parse(localStorage.getItem("productoStorage")));
   })}  
   
   
