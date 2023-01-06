@@ -27,7 +27,7 @@ function creadorProductos (){
       arrListado.push(producto);
       localStorage.clear();
        localStorage.setItem("productoStorange", JSON.stringify(arrListado));
-       escritorHtml(producto);
+       escritorHtml(localStorage.parse("productoStorage"));
   })}  
   
   
@@ -38,7 +38,7 @@ function creadorProductos (){
     
     // let productosStorange2 = JSON.parse(localStorage.getItem("productoStorange"));
     //   if (productosStorange2){arrListado = productosStorange2 } else {productosStorange2 = []}
-    //   productosStorange2.forEach( (producto)=> {
+      producto.forEach( (producto)=> {
         let contenedor = document.createElement("div");
         contenedor.innerHTML= `<img src="${producto.img}">
         <h2> ${producto.nombre}</h2>
@@ -48,8 +48,8 @@ function creadorProductos (){
      
         document.body.appendChild(contenedor)
     return arrListado
-    // }     
-    //     )
+    }     
+        )
         
     };
-escritorHtml(arrListado[producto])
+escritorHtml(arrListado)
