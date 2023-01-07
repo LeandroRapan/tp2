@@ -32,7 +32,7 @@ function creadorProductos (){
   
   
    creadorProductos()
-localStorage.clear()
+
 
   function escritorHtml(producto){
     
