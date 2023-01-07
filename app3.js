@@ -32,13 +32,13 @@ function creadorProductos (){
   
   
    creadorProductos()
-
+localStorage.clear()
 
   function escritorHtml(producto){
     
-    // let productosStorange2 = JSON.parse(localStorage.getItem("productoStorange"));
-    //   if (productosStorange2){arrListado = productosStorange2 } else {productosStorange2 = []}
-      producto.forEach( (producto)=> {
+    let productosStorange2 = JSON.parse(localStorage.getItem("productoStorange"));
+      if (productosStorange2){arrListado = productosStorange2 } else {productosStorange2 = []}
+      productosStorange2.forEach( (producto)=> {
         let contenedor = document.createElement("div");
         contenedor.innerHTML= `<img src="${producto.img}">
         <h2> ${producto.nombre}</h2>
