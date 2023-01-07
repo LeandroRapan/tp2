@@ -33,7 +33,7 @@ function creadorProductos (){
   
    creadorProductos()
 
-
+   let caja = document.getElementById("caja");
   function escritorHtml(producto){
     
     let productosStorange2 = JSON.parse(localStorage.getItem("productoStorange"));
@@ -45,8 +45,8 @@ function creadorProductos (){
         <h2> $${producto.precio}      
         `
         contenedor.className="contenedor"
-     
-        document.body.appendChild(contenedor)
+    
+        document.caja.appendChild(contenedor)
     return arrListado
     }     
         )
