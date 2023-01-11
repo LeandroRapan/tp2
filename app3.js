@@ -1,5 +1,31 @@
 // leandro rapan
 //Array con supuestos datos previos, en este caso el unicornio
+let baseDatosPass="lala";
+
+async function menuLogin() {
+
+    const { value: password } = await Swal.fire({
+      title: 'Hola Lala, ingresá tu contraseña',
+      input: 'password',
+      inputLabel: 'Password',
+      inputPlaceholder: 'Enter your password',
+      inputAttributes: {
+        maxlength: 10,
+        autocapitalize: 'off',
+        autocorrect: 'off'
+      }
+    })
+    
+    // if (password) {
+    //   Swal.fire(`Entered password: ${password}`)
+    // }else{Menu()}
+    
+    if ( password !=="Lala") {
+        Swal.fire("Contraseña incorrecta");
+        menuLogin();
+      }
+    };
+menuLogin()
 let arrListado=[{img: `imagenes\\MacetaProducto1.jpeg`, nombre: "unicornio", precio:"200"}];
 //funciones para crear objetos, hice dos creadorObjetos y creadorProductos, el cual refiere al primero; quizas sea redundante y con uno era suficiente
 function creadorObjetos (img, nombre, precio,  stock){
@@ -38,15 +64,19 @@ function creadorProductos (){
     
     let productosStorange2 = JSON.parse(localStorage.getItem("productoStorange"));
       if (productosStorange2){arrListado = productosStorange2 } else {productosStorange2 = []}
+      caja.innerHTML="";
       productosStorange2.forEach( (producto)=> {
         let contenedor = document.createElement("div");
         contenedor.innerHTML= `<img src="${producto.img}">
         <h2> ${producto.nombre}</h2>
-        <h2> $${producto.precio}      
+        <h2> $${producto.precio}  
+        <button id="boton${producto.nombre}">Eliminar</button>   
         `
-        contenedor.className="contenedor"
-    
-        document.caja.appendChild(contenedor)
+        contenedor.className="contenedor";
+        let boton = boton.getElementById(`boton${producto.nombre}`);
+        boton.addEventListener("click" , ()=> {console.log("click")})
+
+        caja.appendChild(contenedor);
     return arrListado
     }     
         )
