@@ -73,8 +73,8 @@ function creadorProductos (){
         <button id="boton${producto.nombre}">Eliminar</button>   
         `
         contenedor.className="contenedor";
-        let boton = boton.getElementById(`boton${producto.nombre}`);
-        boton.addEventListener("click" , ()=> {console.log("click")})
+        let boton = document.getElementById(`boton${producto.nombre}`);
+         boton.addEventListener("click" , ()=> {console.log("click")})
 
         caja.appendChild(contenedor);
     return arrListado
