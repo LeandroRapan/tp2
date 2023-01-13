@@ -1,7 +1,7 @@
 // leandro rapan
-//Array con supuestos datos previos, en este caso el unicornio
-let baseDatosPass="lala";
 
+let baseDatosPass="lala";
+//Login usando sweet alert
 async function menuLogin() {
 
     const { value: password } = await Swal.fire({
@@ -26,6 +26,7 @@ async function menuLogin() {
       }
     };
 menuLogin()
+//Array con supuestos datos previos, en este caso el unicornio
 let arrListado=[{img: `imagenes\\MacetaProducto1.jpeg`, nombre: "unicornio", precio:"200"}];
 //funciones para crear objetos, hice dos creadorObjetos y creadorProductos, el cual refiere al primero; quizas sea redundante y con uno era suficiente
 function creadorObjetos (img, nombre, precio,  stock){
@@ -61,7 +62,7 @@ function creadorProductos (){
 
    let caja = document.getElementById("caja");
 
-
+//funcion escritora sobre el html
   function escritorHtml(producto){
     
     let productosStorage2 = JSON.parse(localStorage.getItem("productoStorage"));
@@ -103,6 +104,8 @@ function creadorProductos (){
 
 escritorHtml(arrListado);
 
+
+//Ofertas utilizando fetch 
 let contenedorOfertas = document.getElementById("ofertas");
 fetch("./Js/data.json")
 .then(response => response.json())
