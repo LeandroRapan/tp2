@@ -110,7 +110,9 @@ let contenedorOfertas = document.getElementById("ofertas");
 fetch("./Js/data.json")
 .then(response => response.json())
 .then(data=>{
-  let contenedorCarrucel = document.createElement("div class=\"carousel-item active\"")
+  let contenedorCarrucel = document.createElement("div")
+  contenedorCarrucel.classList.add("carousel-item active")
+  contenedorCarrucel.addClass
   data.forEach(oferta =>{
     contenedorCarrucel.innerHTML= `
     <div class="carousel-item active">
