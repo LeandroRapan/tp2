@@ -51,21 +51,23 @@ function creadorProductos (){
 
     let producto = new creadorObjetos (img, nombre, precio, stock);
       arrListado.push(producto);
-      localStorage.clear();
-       localStorage.setItem("productoStorange", JSON.stringify(arrListado));
-       escritorHtml(JSON.parse(localStorage.getItem("productoStorage")));
+      
+       localStorage.setItem("productoStorage", JSON.stringify(arrListado));
+       escritorHtml();
   })}  
   
   
    creadorProductos()
 
    let caja = document.getElementById("caja");
+
+
   function escritorHtml(producto){
     
-    let productosStorange2 = JSON.parse(localStorage.getItem("productoStorange"));
-      if (productosStorange2){arrListado = productosStorange2 } else {productosStorange2 = []}
+    let productosStorage2 = JSON.parse(localStorage.getItem("productoStorage"));
+      if (productosStorage2){arrListado = productosStorage2 } else {productosStorage2 = []}
       caja.innerHTML="";
-      productosStorange2.forEach( (producto)=> {
+      productosStorage2.forEach( (producto)=> {
         let contenedor = document.createElement("div");
         contenedor.innerHTML= `<img src="${producto.img}">
         <h2> ${producto.nombre}</h2>
@@ -73,13 +75,47 @@ function creadorProductos (){
         <button id="boton${producto.nombre}">Eliminar</button>   
         `
         contenedor.className="contenedor";
-        let boton = document.getElementById(`boton${producto.nombre}`);
-         boton.addEventListener("click" , ()=> {console.log("click")})
-
+    
         caja.appendChild(contenedor);
+        let boton = document.getElementById(`boton${producto.nombre}`);
+        boton.addEventListener("click" , ()=> {
+          let detector = productosStorage2.findIndex(obj => obj.nombre);
+          console.log(producto.nombre)
+          // console.log(productosStorage2);
+          console.log(detector);
+          productosStorage2.splice(detector, 1);
+          console.log(productosStorage2)
+          localStorage.setItem("productoStorage", JSON.stringify(productosStorage2));
+          
+          arrListado = productosStorage2;
+
+          console.log(arrListado)
+          escritorHtml();
+        })
+        
+
     return arrListado
     }     
         )
         
     };
-escritorHtml(arrListado)
+
+
+escritorHtml(arrListado);
+
+let contenedorOfertas = document.getElementById("ofertas");
+fetch("./Js/data.json")
+.then(response => response.json())
+.then(data=>{
+  let contenedorCarrucel = document.createElement("div class=\"carousel-item active\"")
+  data.forEach(oferta =>{
+    contenedorCarrucel.innerHTML= `
+    <div class="carousel-item active">
+    <img src="${oferta.img}" class="d-block w-100" alt="imagen de la oferta">
+    </div>
+    `;
+    contenedorOfertas.append(contenedorCarrucel)
+
+  })
+})
+localStorage.clear();
