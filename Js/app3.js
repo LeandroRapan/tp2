@@ -123,4 +123,5 @@ fetch("./Js/data.json")
 
   })
 })
+.catch(error=>console.log(error));
 localStorage.clear();
