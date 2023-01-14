@@ -107,12 +107,12 @@ escritorHtml(arrListado);
 
 //Ofertas utilizando fetch 
 let contenedorOfertas = document.getElementById("ofertas");
-fetch("./Js/data.json")
+fetch("Js/data.json")
 .then(response => response.json())
 .then(data=>{
   let contenedorCarrucel = document.createElement("div")
   
-  contenedorCarrucel.addClass
+
   data.forEach(oferta =>{
     contenedorCarrucel.innerHTML= `
     <div class="carousel-item">
@@ -122,6 +122,6 @@ fetch("./Js/data.json")
     contenedorOfertas.append(contenedorCarrucel)
 
   })
-})
+})    
 .catch(error=>console.log(error));
 localStorage.clear();

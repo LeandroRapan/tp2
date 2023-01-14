@@ -1,5 +1,5 @@
 [
-    {"id":1, "img":"imagenes\\Ofertas\\oferta1.jpg", "duracion":2},
-    {"id":2, "img":"imagenes\\Ofertas\\oferta2.jpg", "ducacion":4},
-    {"id":3, "img":"imagenes\\Ofertas\\oferta3.jpg", "duracion":8}
+    {"id":1, "img":"./imagenes/Ofertas/oferta1.jpg", "duracion":2},
+    {"id":2, "img":"./imagenes/Ofertas/oferta2.jpg", "ducacion":4},
+    {"id":3, "img":"./imagenes/Ofertas/oferta3.jpg", "duracion":8}
 ]
