@@ -29,7 +29,6 @@ menuLogin()
 //Array con supuestos datos previos, en este caso el unicornio
 let arrListado=[{img: `imagenes\\MacetaProducto1.jpeg`, nombre: "unicornio", precio:"200"}];
 //funciones para crear objetos, hice dos creadorObjetos y creadorProductos, el cual refiere al primero; quizas sea redundante y con uno era suficiente
-
 function creadorObjetos (img, nombre, precio,  stock){
     this.img = img;
     this.nombre = nombre;
@@ -106,7 +105,24 @@ function creadorProductos (){
 escritorHtml(arrListado);
 
 
+// //Ofertas utilizando fetch 
+// let contenedorOfertas = document.getElementById("ofertas");
+// fetch("Js/data.json")
+// .then(response => response.json())
+// .then(data=>{
+//   let contenedorCarrucel = document.createElement("div")
+  
 
+//   data.forEach(oferta =>{
+//     contenedorCarrucel.innerHTML= `
+//     <div class="carousel-item">
+//     <img src="${oferta.img}" class="d-block w-100" alt="imagen de la oferta">
+//     </div>
+//     `;
+//     contenedorOfertas.append(contenedorCarrucel)
+
+//   })
+// })    
 //Ofertas utilizando fetch
 let contenedorOfertas = document.getElementById("ofertas");
 fetch("Js/data.json")
@@ -121,5 +137,5 @@ fetch("Js/data.json")
 		});
 	})
 	.catch((error) => console.log(error));
-
+// .catch(error=>console.log(error));
 localStorage.clear();
