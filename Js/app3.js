@@ -108,12 +108,13 @@ escritorHtml(arrListado);
 
 
 //Ofertas utilizando fetch
+let arrayOfertas =[];
 let contenedorOfertas = document.getElementById("ofertas");
 fetch("Js/data.json")
 	.then((response) => response.json())
 	.then((data) => {
-   const arrayOfertas = data;
-    
+    arrayOfertas = data;
+    console.log(arrayOfertas)
 		// data.forEach((oferta, index) => {
 		// 	contenedorOfertas.innerHTML += `
 		// <div class="carousel-item ${index === 0 ? "active" : ""}">
@@ -124,27 +125,35 @@ fetch("Js/data.json")
 	})
 	.catch((error) => console.log(error));
 
-  function productoOferta () { this.img = imgO;
-  this.fechaLimite = fechaLimite;
+  function objetoOferta (imgO, fechaLimite) { 
+    this.id = ()=>{
+      arrayOfertas.forEach((this.id < arrayOfertas.id)?this.id++:this.id);
+    }
+    this.img = imgO;
+    this.fechaLimite = fechaLimite;
   
     }
+let formOfertas = document.getElementById("formOfertas")
 function nuevasOfertas(){
-  let formOfertas = document.getElementById("formOfertas")
+  
  formOfertas.addEventListener("submit", (e)=>{
    e.preventDefault();
   let imgO = document.getElementById("imgOferta").value;
   let fechaLimite= document.getElementById("fechaLimite").value;
     
   //    
- let prod = new productoOferta (imgO, fechaLimite);
- console.log(prod)
-arrayOfertas.push(prod)
-   
+ let prod = new objetoOferta (imgO, fechaLimite);
+ console.log(prod);
+ arrayOfertas.push(prod);
+ localStorage.setItem("ofertasEstorage", JSON.stringify(arrayOfertas))
+
+
   }
   )
 console.log(arrayOfertas);
 }
-localStorage.clear();
+nuevasOfertas();
+
 //ideas ideas. del fetch puede armarse un array que se guarde en local storage, ese mismo array puede ser alimentado con
 //el form, de ahi se transforma en un local storage y de ahi, se pasa al caraoucel
 // la otra seria que el foreach dentro del fetch agrege los elementos del local storage y arme el carrucel.
