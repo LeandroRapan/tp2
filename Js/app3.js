@@ -1,7 +1,7 @@
 // leandro rapan
-
+//PARTE 1
 let baseDatosPass="lala";
-// //Login usando sweet alert
+// // Login usando sweet alert
 // async function menuLogin() {
 
 //     const { value: password } = await Swal.fire({
@@ -27,26 +27,28 @@ let baseDatosPass="lala";
 //     };
 // menuLogin()
 //Array con supuestos datos previos, en este caso el unicornio
+
+//PARTE 2
 let arrListado=[{img: `imagenes\\MacetaProducto1.jpeg`, nombre: "unicornio", precio:"200"}];
-//funciones para crear objetos, hice dos creadorObjetos y creadorProductos, el cual refiere al primero; quizas sea redundante y con uno era suficiente
+//funciones para crear objetos de los productos, hice dos creadorObjetos y creadorProductos, el cual refiere al primero; quizas sea redundante y con uno era suficiente
 
 function creadorObjetos (img, nombre, precio,  stock){
-    this.img = img;
-    this.nombre = nombre;
-    this.precio = precio;
-    
-    this.stock = stock;
+  this.img = img;
+  this.nombre = nombre;
+  this.precio = precio;
+  this.stock = stock;
+
 }
 
 function creadorProductos (){
-   let formulario = document.getElementById("formulario");
+  let formulario = document.getElementById("formulario");
    
     
   formulario.addEventListener("submit", (e)=>{
     e.preventDefault();
     
     let inputs = e.target.children;
-     let img = document.getElementById("imgSrc").value;
+    let img = document.getElementById("imgSrc").value;
     let nombre = document.getElementById("nombre").value;
     let precio = document.getElementById("precio").value;
     let stock = document.getElementById("stock").value;
@@ -56,14 +58,14 @@ function creadorProductos (){
       
     localStorage.setItem("productoStorage", JSON.stringify(arrListado));
     escritorHtml();
-  })}  
+})}  
   
   
-   creadorProductos()
+creadorProductos()
 
-   let caja = document.getElementById("caja");
+let caja = document.getElementById("caja");
 
-//funcion escritora sobre el html
+//funcion escritora de productos sobre el html
 function escritorHtml(producto){
     
   let productosStorage2 = JSON.parse(localStorage.getItem("productoStorage"));
@@ -76,64 +78,58 @@ function escritorHtml(producto){
         <h2> $${producto.precio}  
         <button id="boton${producto.nombre}">Eliminar</button>   
         `
-    contenedor.className="contenedor";
+  contenedor.className="contenedor";
     
     caja.appendChild(contenedor);
     let boton = document.getElementById(`boton${producto.nombre}`);
     boton.addEventListener("click" , ()=> {
-          let detector = productosStorage2.findIndex(obj => obj.nombre);
-          console.log(producto.nombre)
-          // console.log(productosStorage2);
-          console.log(detector);
-          productosStorage2.splice(detector, 1);
-          console.log(productosStorage2)
-          localStorage.setItem("productoStorage", JSON.stringify(productosStorage2));
+    let detector = productosStorage2.findIndex(obj => obj.nombre);
           
-          arrListado = productosStorage2;
+    productosStorage2.splice(detector, 1);
+       
+    localStorage.setItem("productoStorage", JSON.stringify(productosStorage2));
+          
+    arrListado = productosStorage2;
 
-          console.log(arrListado)
-          escritorHtml();
+          
+    escritorHtml();
     })
         
 
     return arrListado
-    }     
-        )
+  }     
+ )
         
-    };
+};
 
 
 escritorHtml(arrListado);
 
 
-
-//Ofertas utilizando fetch
+//PARTE 3
+//Ofertas listado de ofertas utilizando fetch
 let arrayOfertas =[];
 let contenedorOfertas = document.getElementById("ofertas");
 fetch("Js/data.json")
 	.then((response) => response.json())
 	.then((data) => {
-    arrayOfertas = data;
-    console.log(arrayOfertas)
-		// data.forEach((oferta, index) => {
-		// 	contenedorOfertas.innerHTML += `
-		// <div class="carousel-item ${index === 0 ? "active" : ""}">
-		// <img src="${oferta.img}" class="d-block w-100" alt="imagen de la oferta">
-		// </div>
-		// `;
-		// });
+  arrayOfertas = data;
+    
+		
 	})
-	.catch((error) => console.log(error));
-
-  function objetoOferta (imgO, fechaLimite) { 
-    this.id = ()=>{
-      arrayOfertas.forEach((this.id < arrayOfertas.id)?this.id++:this.id);
-    }
-    this.img = imgO;
-    this.fechaLimite = fechaLimite;
+.catch((error) => console.log(error));
+ 
+const crearId = () => Math.ceil(Math.random() * 100000);
+//funcion creadora de objetos
+function objetoOferta (imgO, fechaLimite) { 
+  this.id = crearId();
+     
+  this.img = imgO;
+  this.fechaLimite = fechaLimite;
   
-    }
+}
 let formOfertas = document.getElementById("formOfertas")
+//formulario para crear ofertas
 function nuevasOfertas(){
   
  formOfertas.addEventListener("submit", (e)=>{
@@ -141,18 +137,60 @@ function nuevasOfertas(){
   let imgO = document.getElementById("imgOferta").value;
   let fechaLimite= document.getElementById("fechaLimite").value;
     
-  //    
+  // nuevo objeto ofertas llamando a la funcion creadora de objetos
  let prod = new objetoOferta (imgO, fechaLimite);
- console.log(prod);
+
  arrayOfertas.push(prod);
  localStorage.setItem("ofertasEstorage", JSON.stringify(arrayOfertas))
 
-
+ escritorOfertas()
   }
   )
-console.log(arrayOfertas);
+
 }
 nuevasOfertas();
+let ofertasAEscribir = JSON.parse(localStorage.getItem("ofertasEstorage"));
+let cajaOfertas = document.getElementById("cajaOfertas");
+
+//funcion escritora de ofertas al html
+function escritorOfertas() {
+  cajaOfertas.innerHTML="";
+  ofertasAEscribir.forEach(obj =>{
+    let contenedorOfertas = document.createElement("div")
+    contenedorOfertas.innerHTML =`
+    <img src="${obj.img}">
+    <button id="boton${obj.id}">Eliminar</button>
+    `
+   contenedorOfertas.className="contenedor";
+   cajaOfertas.appendChild(contenedorOfertas);
+   let botonOfertas = document.getElementById(`boton${obj.id}`);
+    botonOfertas.addEventListener("click" , ()=> {
+      let detectorOfertas = ofertasAEscribir.findIndex(obj => obj.id);
+
+      ofertasAEscribir.splice(detectorOfertas, 1);
+       
+      localStorage.setItem("ofertasEstorage", JSON.stringify(ofertasAEscribir));
+                 
+     escritorOfertas();
+    })
+})
+}
+escritorOfertas();
+  
+let botonCarrucel = document.getElementById("vistaPrevia")
+
+//boton que habilita la vista previa de las ofertas en un carrucel homologo al del shop.
+botonCarrucel.addEventListener("click", ()=>{
+ contenedorOfertas.innerHTML="";
+ ofertasAEscribir.forEach((oferta, index) => {
+		contenedorOfertas.innerHTML += `
+		<div class="carousel-item ${index === 0 ? "active" : ""}">
+		<img src="${oferta.img}" class="d-block w-100" alt="imagen de la oferta">
+		</div>
+		`;
+})})
+
+  
 
 //ideas ideas. del fetch puede armarse un array que se guarde en local storage, ese mismo array puede ser alimentado con
 //el form, de ahi se transforma en un local storage y de ahi, se pasa al caraoucel
