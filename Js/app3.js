@@ -118,12 +118,11 @@ fetch("Js/data.json")
 		
 	})
 .catch((error) => console.log(error));
- 
+ //funcion creadora de id
 const crearId = () => Math.ceil(Math.random() * 100000);
 //funcion creadora de objetos
 function objetoOferta (imgO, fechaLimite) { 
   this.id = crearId();
-     
   this.img = imgO;
   this.fechaLimite = fechaLimite;
   
@@ -133,7 +132,7 @@ let formOfertas = document.getElementById("formOfertas")
 function nuevasOfertas(){
   
  formOfertas.addEventListener("submit", (e)=>{
-   e.preventDefault();
+  e.preventDefault();
   let imgO = document.getElementById("imgOferta").value;
   let fechaLimite= document.getElementById("fechaLimite").value;
     
@@ -164,15 +163,15 @@ function escritorOfertas() {
    contenedorOfertas.className="contenedor";
    cajaOfertas.appendChild(contenedorOfertas);
    let botonOfertas = document.getElementById(`boton${obj.id}`);
-    botonOfertas.addEventListener("click" , ()=> {
-      let detectorOfertas = ofertasAEscribir.findIndex(obj => obj.id);
+   botonOfertas.addEventListener("click" , ()=> {
+   let detectorOfertas = ofertasAEscribir.findIndex(obj => obj.id);
 
-      ofertasAEscribir.splice(detectorOfertas, 1);
+   ofertasAEscribir.splice(detectorOfertas, 1);
        
-      localStorage.setItem("ofertasEstorage", JSON.stringify(ofertasAEscribir));
+   localStorage.setItem("ofertasEstorage", JSON.stringify(ofertasAEscribir));
                  
-     escritorOfertas();
-    })
+    escritorOfertas();
+  })
 })
 }
 escritorOfertas();
