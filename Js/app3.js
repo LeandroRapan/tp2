@@ -141,20 +141,21 @@ function nuevasOfertas(){
 
  arrayOfertas.push(prod);
  localStorage.setItem("ofertasEstorage", JSON.stringify(arrayOfertas))
-
+ console.log(arrayOfertas);
  escritorOfertas()
   }
   )
 
 }
 nuevasOfertas();
-let ofertasAEscribir = JSON.parse(localStorage.getItem("ofertasEstorage"));
+// let ofertasAEscribir = JSON.parse(localStorage.getItem("ofertasEstorage"));
 let cajaOfertas = document.getElementById("cajaOfertas");
 
 //funcion escritora de ofertas al html
 function escritorOfertas() {
   cajaOfertas.innerHTML="";
-  ofertasAEscribir.forEach(obj =>{
+  // ofertasAEscribir.forEach(obj =>{
+    arrayOfertas.forEach(obj =>{
     let contenedorOfertas = document.createElement("div")
     contenedorOfertas.innerHTML =`
     <img src="${obj.img}">
@@ -162,15 +163,19 @@ function escritorOfertas() {
     `
    contenedorOfertas.className="contenedor";
    cajaOfertas.appendChild(contenedorOfertas);
+  
+  //boton de eliminacion de ofertas
    let botonOfertas = document.getElementById(`boton${obj.id}`);
    botonOfertas.addEventListener("click" , ()=> {
 
-///ACA CREO ESTA EL PROBLEMA
-   let detectorOfertas = ofertasAEscribir.findIndex(obj => obj.id);
-
-   ofertasAEscribir.splice(detectorOfertas, 1);
+    ///ACA CREO ESTA EL PROBLEMA
+   let detectorOfertas = arrayOfertas.findIndex(obj => obj.id);
+  
+  
+   console.log(detectorOfertas)
+   arrayOfertas.splice(detectorOfertas, 1);
        
-   localStorage.setItem("ofertasEstorage", JSON.stringify(ofertasAEscribir));
+   localStorage.setItem("ofertasEstorage", JSON.stringify(arrayOfertas));
                  
     escritorOfertas();
   })
@@ -183,7 +188,7 @@ let botonCarrucel = document.getElementById("vistaPrevia")
 //boton que habilita la vista previa de las ofertas en un carrucel homologo al del shop.
 botonCarrucel.addEventListener("click", ()=>{
  contenedorOfertas.innerHTML="";
- ofertasAEscribir.forEach((oferta, index) => {
+ arrayOfertas.forEach((oferta, index) => {
 		contenedorOfertas.innerHTML += `
 		<div class="carousel-item ${index === 0 ? "active" : ""}">
 		<img src="${oferta.img}" class="d-block w-100" alt="imagen de la oferta">
