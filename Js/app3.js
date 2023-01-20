@@ -164,6 +164,8 @@ function escritorOfertas() {
    cajaOfertas.appendChild(contenedorOfertas);
    let botonOfertas = document.getElementById(`boton${obj.id}`);
    botonOfertas.addEventListener("click" , ()=> {
+
+///ACA CREO ESTA EL PROBLEMA
    let detectorOfertas = ofertasAEscribir.findIndex(obj => obj.id);
 
    ofertasAEscribir.splice(detectorOfertas, 1);
