@@ -1,7 +1,7 @@
 // leandro rapan
 //PARTE 1
-let baseDatosPass="lala";
-// Login usando sweet alert
+
+// Login usando sweet alert. La contraseña es "Lala" recomiendo comentar luego el pass para que no estorve 
 async function menuLogin() {
 
     const { value: password } = await Swal.fire({
@@ -24,25 +24,27 @@ async function menuLogin() {
         timer:1500,
         showConfirmButton: false,
       })
-      setTimeout(menuLogin,2000)
+      setTimeout(menuLogin,2000)//el setTimeout permite que se muestre "contraseña incorrecta, antes de devolver al login"
       
     }};
 menuLogin()
-//Array con supuestos datos previos, en este caso el unicornio
+
 
 //PARTE 2
+//Array con supuestos datos previos, en este caso el unicornio
 let arrListado=[{img: `imagenes\\MacetaProducto1.jpeg`, nombre: "unicornio", precio:"200"}];
+
 //funciones para crear objetos de los productos, hice dos creadorObjetos y creadorProductos, el cual refiere al primero; quizas sea redundante y con uno era suficiente
 
 function creadorObjetos (img, nombre, precio,  stock){
   this.img = img;
-  this.nombre = nombre;
+  this.nombre = nombre===""? nombre = "SinNombre" : nombre; //esta linea busca evitar el error de un producto sin nombre, ya que, la iteración de futuras opciones se harán con este atributo y no con Id; solo por probar y aprender (En la parte 3, correspondiente al sector ofertas, ya se utiliza el clasico id)
   this.precio = precio;
   this.stock = stock;
 
 }
 
-
+//el submit
 function creadorProductos (){
   let formulario = document.getElementById("formulario");
    
@@ -55,25 +57,23 @@ function creadorProductos (){
     let nombre = document.getElementById("nombre").value;
     let precio = document.getElementById("precio").value;
     let stock = document.getElementById("stock").value;
-
-    let producto = new creadorObjetos (img, nombre, precio, stock);
+  
+    let producto = new creadorObjetos (img, nombre, precio, stock); //llamado a la funcion previa que formará los objetos
     arrListado.push(producto);
       
     localStorage.setItem("productoStorage", JSON.stringify(arrListado));
-    escritorHtml();
+    escritorHtml();//llamada a la funcion escritora
 })}  
-  
-  
-creadorProductos()
+  creadorProductos()
 
 let caja = document.getElementById("caja");
 
 //funcion escritora de productos sobre el html
-function escritorHtml(producto){
+function escritorHtml(){
     
   let productosStorage2 = JSON.parse(localStorage.getItem("productoStorage"));
-  if (productosStorage2){arrListado = productosStorage2 } else {productosStorage2 = []}
-  caja.innerHTML="";
+  if (productosStorage2) { productosStorage2 =arrListado} else {productosStorage2 = []}//condicion para evitar que un productos storange indefinido nos inutilice el subsiguiente forEach
+  caja.innerHTML=""; //reinicia la escritura del html para evitar duplicados
   productosStorage2.forEach( (producto)=> {
     let contenedor = document.createElement("div");
     contenedor.innerHTML= `<img src="${producto.img}">
@@ -86,9 +86,8 @@ function escritorHtml(producto){
     caja.appendChild(contenedor);
     let boton = document.getElementById(`${producto.nombre}`);
     boton.addEventListener("click" , (e)=> {
-    let detector = productosStorage2.findIndex(obj => obj.nombre=== e.target.id);
-          console.log(arrListado)
-    console.log(detector)
+    let detector = productosStorage2.findIndex(obj => obj.nombre=== e.target.id);//e.target.id es el nombre de cada contenedor de los botones correspondientes a las imagenes. Usamos el findIdex para encontrar la coincidencia en el array y luego splice para eliminar, usando esta variable como argumento.
+   
     console.log(productosStorage2.findIndex(obj => obj.nombre ))
     productosStorage2.splice(detector, 1);
        
@@ -101,13 +100,13 @@ function escritorHtml(producto){
     })
         
 
-    return arrListado
+   
   }     
  )
         
 };
 
-localStorage.clear()
+
 escritorHtml(arrListado);
 
 
@@ -206,10 +205,13 @@ botonCarrucel.addEventListener("click", ()=>{
 })})
 }
 carrucel()
+
+// se enviarian datos en un array pasado a JSON que dentro tiene los arrays con objetos pertenecientes a Productos uno y a ofertas el otro. No se de backend pero me imagino que más o menos se deben mandar las cosas asi.
 let botonSubmit = document.getElementById("submitCambios");
 let arraySubmit = [];
 botonSubmit.addEventListener("click", ()=> {
 arraySubmit = [[JSON.parse(localStorage.getItem("productoStorage"))], [JSON.parse(localStorage.getItem("ofertasEstorage"))]];
+//toastify para que se note que se enviaron datos (simulado obviamente)
 Toastify({
   text: "cambios enviados",
   className: "info",
@@ -217,7 +219,7 @@ Toastify({
     background: "linear-gradient(to right, #00b09b, #96c93d)",
   }
 }).showToast();
-console.log(Toastify)
+
 return console.log(JSON.stringify(arraySubmit))
 
 })
