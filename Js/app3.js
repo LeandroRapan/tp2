@@ -1,31 +1,33 @@
 // leandro rapan
 //PARTE 1
 let baseDatosPass="lala";
-// // Login usando sweet alert
-// async function menuLogin() {
+// Login usando sweet alert
+async function menuLogin() {
 
-//     const { value: password } = await Swal.fire({
-//       title: 'Hola Lala, ingresá tu contraseña',
-//       input: 'password',
-//       inputLabel: 'Password',
-//       inputPlaceholder: 'Enter your password',
-//       inputAttributes: {
-//         maxlength: 10,
-//         autocapitalize: 'off',
-//         autocorrect: 'off'
-//       }
-//     })
+    const { value: password } = await Swal.fire({
+      title: 'Hola Lala, ingresá tu contraseña',
+      input: 'password',
+      inputLabel: 'Password',
+      inputPlaceholder: 'Enter your password',
+      inputAttributes: {
+        maxlength: 10,
+        autocapitalize: 'off',
+        autocorrect: 'off'
+      }
+    })
     
-//     // if (password) {
-//     //   Swal.fire(`Entered password: ${password}`)
-//     // }else{Menu()}
+  
     
-//     if ( password !=="Lala") {
-//         Swal.fire("Contraseña incorrecta");
-//         menuLogin();
-//       }
-//     };
-// menuLogin()
+    if ( password !=="Lala") {
+        Swal.fire({
+          title: "Contraseña incorrecta",
+        timer:1500,
+        showConfirmButton: false,
+      })
+      setTimeout(menuLogin,2000)
+      
+    }};
+menuLogin()
 //Array con supuestos datos previos, en este caso el unicornio
 
 //PARTE 2
@@ -39,6 +41,7 @@ function creadorObjetos (img, nombre, precio,  stock){
   this.stock = stock;
 
 }
+
 
 function creadorProductos (){
   let formulario = document.getElementById("formulario");
@@ -76,15 +79,17 @@ function escritorHtml(producto){
     contenedor.innerHTML= `<img src="${producto.img}">
         <h2> ${producto.nombre}</h2>
         <h2> $${producto.precio}  
-        <button id="boton${producto.nombre}">Eliminar</button>   
+        <button id="${producto.nombre}">Eliminar</button>   
         `
   contenedor.className="contenedor";
     
     caja.appendChild(contenedor);
-    let boton = document.getElementById(`boton${producto.nombre}`);
-    boton.addEventListener("click" , ()=> {
-    let detector = productosStorage2.findIndex(obj => obj.nombre);
-          
+    let boton = document.getElementById(`${producto.nombre}`);
+    boton.addEventListener("click" , (e)=> {
+    let detector = productosStorage2.findIndex(obj => obj.nombre=== e.target.id);
+          console.log(arrListado)
+    console.log(detector)
+    console.log(productosStorage2.findIndex(obj => obj.nombre ))
     productosStorage2.splice(detector, 1);
        
     localStorage.setItem("productoStorage", JSON.stringify(productosStorage2));
@@ -102,7 +107,7 @@ function escritorHtml(producto){
         
 };
 
-
+localStorage.clear()
 escritorHtml(arrListado);
 
 
@@ -114,19 +119,20 @@ fetch("Js/data.json")
 	.then((response) => response.json())
 	.then((data) => {
   arrayOfertas = data;
-    
+  escritorOfertas()
 		
 	})
 .catch((error) => console.log(error));
  //funcion creadora de id
 const crearId = () => Math.ceil(Math.random() * 100000);
 //funcion creadora de objetos
-function objetoOferta (imgO, fechaLimite) { 
+function objetoOferta (imgO) { 
   this.id = crearId();
   this.img = imgO;
-  this.fechaLimite = fechaLimite;
+ 
   
-}
+} 
+
 let formOfertas = document.getElementById("formOfertas")
 //formulario para crear ofertas
 function nuevasOfertas(){
@@ -134,10 +140,10 @@ function nuevasOfertas(){
  formOfertas.addEventListener("submit", (e)=>{
   e.preventDefault();
   let imgO = document.getElementById("imgOferta").value;
-  let fechaLimite= document.getElementById("fechaLimite").value;
+  
     
   // nuevo objeto ofertas llamando a la funcion creadora de objetos
- let prod = new objetoOferta (imgO, fechaLimite);
+ let prod = new objetoOferta (imgO);
 
  arrayOfertas.push(prod);
  localStorage.setItem("ofertasEstorage", JSON.stringify(arrayOfertas))
@@ -148,8 +154,9 @@ function nuevasOfertas(){
 
 }
 nuevasOfertas();
-// let ofertasAEscribir = JSON.parse(localStorage.getItem("ofertasEstorage"));
-let cajaOfertas = document.getElementById("cajaOfertas");
+ 
+
+ let cajaOfertas = document.getElementById("cajaOfertas");
 
 //funcion escritora de ofertas al html
 function escritorOfertas() {
@@ -159,20 +166,21 @@ function escritorOfertas() {
     let contenedorOfertas = document.createElement("div")
     contenedorOfertas.innerHTML =`
     <img src="${obj.img}">
-    <button id="boton${obj.id}">Eliminar</button>
+    <button id="${obj.id}">Eliminar</button>
     `
    contenedorOfertas.className="contenedor";
    cajaOfertas.appendChild(contenedorOfertas);
   
   //boton de eliminacion de ofertas
-   let botonOfertas = document.getElementById(`boton${obj.id}`);
-   botonOfertas.addEventListener("click" , ()=> {
-
-    ///ACA CREO ESTA EL PROBLEMA
-   let detectorOfertas = arrayOfertas.findIndex(obj => obj.id);
-  
-  
-   console.log(detectorOfertas)
+   let botonOfertas = document.getElementById(`${obj.id}`);
+   botonOfertas.addEventListener("click" , (e) => {
+   
+    
+    console.log(e.target.id);
+    let detectorOfertas = arrayOfertas.findIndex(obj => obj.id === parseInt(e.target.id));
+    console.log(detectorOfertas);
+    
+   
    arrayOfertas.splice(detectorOfertas, 1);
        
    localStorage.setItem("ofertasEstorage", JSON.stringify(arrayOfertas));
@@ -181,11 +189,12 @@ function escritorOfertas() {
   })
 })
 }
-escritorOfertas();
-  
+
+  escritorOfertas(arrayOfertas);
 let botonCarrucel = document.getElementById("vistaPrevia")
 
 //boton que habilita la vista previa de las ofertas en un carrucel homologo al del shop.
+function carrucel() {
 botonCarrucel.addEventListener("click", ()=>{
  contenedorOfertas.innerHTML="";
  arrayOfertas.forEach((oferta, index) => {
@@ -195,6 +204,23 @@ botonCarrucel.addEventListener("click", ()=>{
 		</div>
 		`;
 })})
+}
+carrucel()
+let botonSubmit = document.getElementById("submitCambios");
+let arraySubmit = [];
+botonSubmit.addEventListener("click", ()=> {
+arraySubmit = [[JSON.parse(localStorage.getItem("productoStorage"))], [JSON.parse(localStorage.getItem("ofertasEstorage"))]];
+Toastify({
+  text: "cambios enviados",
+  className: "info",
+  style: {
+    background: "linear-gradient(to right, #00b09b, #96c93d)",
+  }
+}).showToast();
+console.log(Toastify)
+return console.log(JSON.stringify(arraySubmit))
+
+})
 
   
 
